@@ -1,30 +1,38 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
+  <h1>Linh's TODO App</h1>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <label for="item-input">item description</label>
+    <input id="item-input" type="text" v-model="description" />
+    <button @click="addItem">Add item</button>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <div>
+    <ul>
+      <li v-for="(item, index) in todoItems" :key="index">
+        {{ item }}
+      </li>
+    </ul>
+
+  </div>
 </template>
 
+<script setup lang="ts">
+import { ref } from 'vue'
+const description = ref<string>('')
+
+const todoItems = ref<string[]>([])
+
+const addItem = () => {
+  todoItems.value = [
+    ...todoItems.value,
+    description.value
+  ]
+
+  description.value = ''
+}
+
+
+</script>
+
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+
 </style>

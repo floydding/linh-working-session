@@ -7,9 +7,9 @@
   </div>
   <div>
     <ul>
-      <li v-for="(item, index) in todoItems" :key="index">
-        {{ item }}
-        <button @click="removeItem(index)">Remove item</button>
+      <li v-for="item in todoItems" :key="item.id">
+        {{ item.description }}
+        <button @click="removeItem(item.id)">Remove item</button>
       </li>
     </ul>
 
@@ -20,19 +20,27 @@
 import { ref } from 'vue'
 const description = ref<string>('')
 
-const todoItems = ref<string[]>([])
+type TodoItem = {
+  id: string,
+  description: string
+}
+
+const todoItems = ref<TodoItem[]>([])
 
 const addItem = () => {
   todoItems.value = [
     ...todoItems.value,
-    description.value
+    {
+      id: new Date().toISOString(),
+      description: description.value
+    }
   ]
 
   description.value = ''
 }
 
-const removeItem = (idx) => {
-  todoItems.value = todoItems.value.splice(idx, 1)
+const removeItem = (id: string) => {
+  todoItems.value = todoItems.value.filter(item => item.id !== id)
 }
 
 

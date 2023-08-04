@@ -7,11 +7,12 @@
   </div>
   <div>
     <ul>
-      <li v-for="(item, index) in todoItems" :key="index">
-        {{ item }}
+      <li v-for="item in todoItems" :key="item.id">
+        {{ item.description }}
+        <button @click="removeItem(item.id)">Remove item</button>
+        <input :value="message" @input=renameItem(item.id, message) placeholder="Rename item here" />
       </li>
     </ul>
-
   </div>
 </template>
 
@@ -19,17 +20,34 @@
 import { ref } from 'vue'
 const description = ref<string>('')
 
-const todoItems = ref<string[]>([])
+type TodoItem = {
+  id: string,
+  description: string
+}
+
+const todoItems = ref<TodoItem[]>([])
 
 const addItem = () => {
   todoItems.value = [
     ...todoItems.value,
-    description.value
+    {
+      id: new Date().toISOString(),
+      description: description.value
+    }
   ]
 
   description.value = ''
 }
 
+const removeItem = (id: string) => {
+  todoItems.value = todoItems.value.filter(item => item.id !== id)
+}
+
+const renameItem = (id: string, description: string) => {
+  todoItems.value = todoItems.value.map(item =>
+      (item.id === id) ? {id, description} : {item.id, item.description}
+  )
+}
 
 </script>
 

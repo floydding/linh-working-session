@@ -10,9 +10,9 @@
       <li v-for="item in todoItems" :key="item.id">
         {{ item.description }}
         <button @click="removeItem(item.id)">Remove item</button>
+        <input :value="message" @input=renameItem(item.id, message) placeholder="Rename item here" />
       </li>
     </ul>
-
   </div>
 </template>
 
@@ -43,6 +43,11 @@ const removeItem = (id: string) => {
   todoItems.value = todoItems.value.filter(item => item.id !== id)
 }
 
+const renameItem = (id: string, description: string) => {
+  todoItems.value = todoItems.value.map(item =>
+      (item.id === id) ? {id, description} : {item.id, item.description}
+  )
+}
 
 </script>
 

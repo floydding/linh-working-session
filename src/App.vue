@@ -8,7 +8,7 @@
   <div>
     <ul>
       <li v-for="(item, index) in todoItems" :key="index">
-        {{ item }}
+        <Todo :item="item" :removeItem="removeItem" :renameItem="renameItem" />
       </li>
     </ul>
 
@@ -17,17 +17,36 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import Todo from './Todo.vue'
+import { TodoItem } from './item'
 const description = ref<string>('')
 
-const todoItems = ref<string[]>([])
+const todoItems = ref<TodoItem[]>([])
 
 const addItem = () => {
   todoItems.value = [
     ...todoItems.value,
-    description.value
+    {
+      id: Date.now().toString(),
+      description: description.value,      
+    }
   ]
 
   description.value = ''
+}
+
+const removeItem = (id: string) => {
+  todoItems.value = todoItems.value.filter((item) => item.id !== id)
+}
+
+const renameItem = (id: string, description: string) => {
+  todoItems.value = todoItems.value.map((item) => {
+    if (item.id === id) {
+      return { id, description };
+    } else {
+      return item;
+    }
+  })
 }
 
 

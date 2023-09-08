@@ -1,12 +1,10 @@
 <template>
     <span> {{ props.item.description }} </span>
     <button @click="removeItem(props.item.id)">Remove item</button>
-    <input :value="message" @input="(input) => {
-        message = message + input.data;
-        renameItem(props.item.id, message)
-    }"
-    @click="() => message = ''"
-    placeholder="Rename item here" />
+    <input v-model="message" placeholder="Rename item here" v-on:blur="() => {
+        renameItem(item.id, message);
+        message = '';
+    }"/>
 </template>
 
 <script setup lang="ts">

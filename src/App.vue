@@ -8,7 +8,7 @@
   <div>
     <ul>
       <li v-for="(item, index) in todoItems" :key="index">
-        <Todo :item="item" :removeItem="removeItem" :renameItem="renameItem" />
+        <Todo :todoItems="todoItems" :item="item" @removeItem="(id) => removeItem(id)" @renameItem="(id, message) => renameItem(id, message)" />
       </li>
     </ul>
 
@@ -37,7 +37,7 @@ const addItem = () => {
 
 const removeItem = (id: string) => {
   todoItems.value = todoItems.value.filter((item) => item.id !== id)
-}
+};
 
 const renameItem = (id: string, description: string) => {
   todoItems.value = todoItems.value.map((item) => {
@@ -48,7 +48,6 @@ const renameItem = (id: string, description: string) => {
     }
   })
 }
-
 
 </script>
 

@@ -8,7 +8,7 @@
   <div>
     <ul>
       <li v-for="(item, index) in todoItems" :key="index">
-        <Todo :todoItems="todoItems" :item="item" @removeItem="(id) => removeItem(id)" @renameItem="(id, message) => renameItem(id, message)" />
+        <Todo :item="item" @removeItem="(id) => removeItem(id)" @renameItem="(id, message) => renameItem(id, message)" />
       </li>
     </ul>
 

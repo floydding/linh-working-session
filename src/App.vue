@@ -6,6 +6,9 @@
     <button @click="addItem">Add item</button>
   </div>
   <div>
+    <Counter />
+  </div>
+  <div>
     <ul>
       <li v-for="(item, index) in todoItems" :key="index">
         <Todo :item="item" @removeItem="(id) => removeItem(id)" @renameItem="(id, message) => renameItem(id, message)" />
@@ -16,7 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { provide, ref } from 'vue'
+import Counter from './Counter.vue'
 import Todo from './Todo.vue'
 import { TodoItem } from './item'
 const description = ref<string>('')
@@ -48,6 +52,8 @@ const renameItem = (id: string, description: string) => {
     }
   })
 }
+
+provide('todoSize', () => todoItems.value.length)
 
 </script>
 

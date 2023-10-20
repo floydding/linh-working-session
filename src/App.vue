@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { provide, ref } from 'vue'
+import { provide, ref, computed } from 'vue'
 import Counter from './Counter.vue'
 import Todo from './Todo.vue'
 import { TodoItem } from './item'
@@ -53,7 +53,7 @@ const renameItem = (id: string, description: string) => {
   })
 }
 
-provide('todoSize', () => todoItems.value.length)
+provide('todoSize', computed(() => todoItems.value.length))
 
 </script>
 

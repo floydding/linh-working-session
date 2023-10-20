@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { inject, computed } from 'vue'
+import { inject } from 'vue'
 
-const todoSize = computed(inject('todoSize'))
+const todoSize = inject('todoSize')
 </script>
